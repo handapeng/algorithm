@@ -30,6 +30,21 @@ public class ClimbStairs {
             return anInt;
         }
     }
+    public static int clb(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        int a, b = 1, c = 2;
+        for (int i = 3; i <= n; i++) {
+            a = b;
+            b = c;
+            c = a + b;
+        }
+        return c;
+    }
     public static void main(String[] args) {
         System.out.println(count(45));
     }
