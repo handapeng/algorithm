@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  */
 public class MyClassLoaderTest {
     static class MyClassLoader extends ClassLoader {
-        private String classPath;
+        private final String classPath;
 
         public MyClassLoader(String classPath) {
             this.classPath = classPath;
@@ -26,6 +26,7 @@ public class MyClassLoaderTest {
             fis.close();
             return data;
         }
+        @Override
         protected Class<?> findClass(String name) throws ClassNotFoundException {
             try {
                 byte[] bytes = loadByte(name);
@@ -43,6 +44,7 @@ public class MyClassLoaderTest {
          * @return
          * @throws ClassNotFoundException
          */
+        @Override
         protected Class<?> loadClass(String name, boolean resolve)
                 throws ClassNotFoundException
         {
