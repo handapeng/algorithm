@@ -1,5 +1,7 @@
 package com.hdp.algorithm;
 
+import java.util.HashMap;
+
 /**
  * @author HDP
  * @ClassName: TwoSum
@@ -18,5 +20,17 @@ public class TwoSum {
             }
         }
         return a;
+
+
+
+//        HashMap<Integer, Integer> map = new HashMap();
+//        for (int i = 0; i < nums.length; i++) {
+//            if (map.containsKey(target - nums[i])) {
+//                return new int[]{map.get(target - nums[i]),i};
+//            }
+//            map.put(nums[i], i);
+//        }
+//        return new int[2];
     }
+
 }
