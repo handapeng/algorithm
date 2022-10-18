@@ -11,8 +11,8 @@ import java.util.Objects;
 public class DeleteDuplicates {
 
     public static MergeTwoLists.ListNode deleteDuplicates(MergeTwoLists.ListNode head) {
-        if (Objects.isNull(head) || Objects.isNull(head.next)) {
-            return null;
+        if (Objects.isNull(head)||Objects.isNull(head.next)) {
+            return head;
         }
         if (Objects.equals(head.val, head.next.val)) {
             head.next = head.next.next;
