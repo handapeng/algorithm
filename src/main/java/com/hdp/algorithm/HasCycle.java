@@ -1,8 +1,10 @@
 package com.hdp.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author HDP
@@ -20,17 +22,17 @@ public class HasCycle {
       }
   }
     public boolean hasCycle(ListNode head) {
-        List<ListNode> list = new ArrayList<>();
+        Set<ListNode> list = new HashSet<>();
         do
         {
-            if (list.contains(head)) {
+            if (!list.add(head)) {
                 return true;
             }
             list.add(head);
-            if (Objects.nonNull(head)) {
+            if (head!=null) {
                 head = head.next;
             }
-        } while (Objects.nonNull(head));
+        } while (head!=null);
         return false;
     }
 }
