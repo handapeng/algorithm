@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * @author HDP
  * @ClassName: DetectCycle
- * @Description:
+ * @Description:环形链表二
  * @date 2022/10/19 10:07
  */
 public class DetectCycle {
