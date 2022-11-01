@@ -1,6 +1,4 @@
-package com.hdp.juc;
-
-import java.util.concurrent.locks.LockSupport;
+package com.hdp.juc.factory;
 
 /**
  * @author HDP
