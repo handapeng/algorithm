@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author HDP
  * @ClassName: ReentrantLockDemo6
- * @Description:
+ * @Description:条件变量
  * @date 2022/11/9 22:09
  */
 @Slf4j
@@ -16,82 +16,71 @@ public class ReentrantLockDemo6 {
     private static ReentrantLock lock = new ReentrantLock();
     private static Condition cigCon = lock.newCondition();
     private static Condition takeCon = lock.newCondition();
-
-    private static boolean hashcig = false;
+    private static boolean hascig = false;
     private static boolean hastakeout = false;
 
-    //送烟
     public void cigratee() {
         lock.lock();
         try {
-            while (!hashcig) {
+            while (!hascig) {
                 try {
                     log.debug("没有烟，歇一会");
                     cigCon.await();
-
                 } catch (
-                        Exception e) {
-                    e.printStackTrace();
+                        InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
             log.debug("有烟了，干活");
-        } finally {
+        }finally {
             lock.unlock();
         }
     }
 
-    //送外卖
     public void takeout() {
         lock.lock();
         try {
             while (!hastakeout) {
                 try {
-                    log.debug("没有饭，歇一会");
+                    log.debug("没饭了，歇一会");
                     takeCon.await();
-
                 } catch (
-                        Exception e) {
+                        InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             log.debug("有饭了，干活");
-        } finally {
+        }finally {
             lock.unlock();
         }
     }
-
     public static void main(String[] args) {
-        ReentrantLockDemo6 test = new ReentrantLockDemo6();
+        ReentrantLockDemo6 demo6 = new ReentrantLockDemo6();
         new Thread(() -> {
-            test.cigratee();
+            demo6.cigratee();
         }).start();
-
         new Thread(() -> {
-            test.takeout();
+            demo6.takeout();
         }).start();
-
         new Thread(() -> {
             lock.lock();
             try {
-                hashcig = true;
-                //唤醒送烟的等待线程
+                hascig = true;
+                log.debug("唤醒烟的等待线程");
                 cigCon.signal();
             } finally {
                 lock.unlock();
             }
-
-
-        }, "t1").start();
-
+        }).start();
         new Thread(() -> {
             lock.lock();
             try {
                 hastakeout = true;
-                //唤醒送饭的等待线程
+                log.debug("唤醒饭的等待线程");
                 takeCon.signal();
-            } finally {
+            }finally {
                 lock.unlock();
             }
-        }, "t2").start();
+        }).start();
     }
 }
