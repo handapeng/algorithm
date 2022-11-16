@@ -1,0 +1,53 @@
+package com.hdp.juc.lock;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+/**
+ * CyclicBarrier(回环栅栏)允许一组线程互相等待，直到到达某个公共屏障点 (Common Barrier Point)
+ * 闭锁用于等待countDown事件，而栅栏用于等待其他线程。
+ */
+public class CyclicBarrierTest {
+    public static void main(String[] args) throws InterruptedException {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
+        for (int i = 0; i < 5; i++) {
+            new Thread(() -> {
+                try {
+                    System.out.println(Thread.currentThread().getName()
+                            + "开始等待其他线程");
+                    cyclicBarrier.await();
+                    System.out.println(Thread.currentThread().getName() + "开始执行");
+                    //TODO 模拟业务处理
+                    Thread.sleep(5000);
+                    System.out.println(Thread.currentThread().getName() + "执行完毕");
+
+                } catch (
+                        InterruptedException e) {
+                    e.printStackTrace();
+                } catch (
+                        BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+        Thread.sleep(10000);
+        new Thread(() -> {
+            try {
+                System.out.println(Thread.currentThread().getName()
+                        + "新增线程开始等待其他线程");
+                cyclicBarrier.await();
+                System.out.println(Thread.currentThread().getName() + "新增线程开始执行");
+                //TODO 模拟业务处理
+                Thread.sleep(5000);
+                System.out.println(Thread.currentThread().getName() + "新增线程开始执行");
+
+            } catch (
+                    InterruptedException e) {
+                e.printStackTrace();
+            } catch (
+                    BrokenBarrierException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+}
