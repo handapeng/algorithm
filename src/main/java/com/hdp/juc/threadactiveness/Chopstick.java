@@ -1,4 +1,4 @@
-package com.hdp.juc.lock;
+package com.hdp.juc.threadactiveness;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
