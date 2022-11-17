@@ -25,8 +25,8 @@ public class ThreadPoolDemo {
     //		1）ArrayBlockingQueue：是一个基于数组结构的有界阻塞队列，此队列按照先进先出原则对元素进行排序
     //		2）LinkedBlockingQueue：是一个基于链表结构的阻塞队列，此队列按照先进先出排序元素，吞吐量通常要高于 ArrayBlockingQueue。
     //		静态工厂方法Executors.newFixedThreadPool使用了这个队列。
-    //3）SynchronousQueue：一个不存储元素的阻塞队列，每个插入操作必须等到另外一个线程调用移除操作，否则插入操作一直处理阻塞状态，吞吐量通常要高于LinkedBlockingQueue，
-    // 静态工厂方法Executors.newCachedThreadPool使用这个队列
+    //      3）SynchronousQueue：一个不存储元素的阻塞队列，每个插入操作必须等到另外一个线程调用移除操作，否则插入操作一直处理阻塞状态，吞吐量通常要高于LinkedBlockingQueue，
+    //      静态工厂方法Executors.newCachedThreadPool使用这个队列
     //		4）PriorityBlockingQueue：优先级队列，进入队列的元素按照优先级会进行排序
     //6、threadFactory：线程池中创建线程的工厂，可以通过线程工厂给每个创建出来的线程设置更有意义的名字
     //7、handler：饱和策略(拒绝策略)，当线程池无法处理新来的任务了，那么需要提供一种策略处理提交的新任务，默认有 4 种策略
