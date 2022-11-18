@@ -15,7 +15,7 @@ public class LinkedBlockingQueueTest {
         // 1、add 方法:队列已满，报java.lang.IllegalStateException: Queue full 错误
         System.out.println("-----add  方法-----");
         for (int i = 0; i < 5; i++) {
-//            linkedBlockingQueue.add(String.valueOf(i));
+            linkedBlockingQueue.add(String.valueOf(i));
         }
         // 2、offer 方法，队列已满，程序正常运行，只是不再新增元素
         System.out.println("-----offer方法-----");
