@@ -1036,6 +1036,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                     if (tabAt(tab, i) == f) {
                         if (fh >= 0) {
                             binCount = 1;
+                            //遍历链表
                             for (Node<K,V> e = f;; ++binCount) {
                                 K ek;
                                 if (e.hash == hash &&
@@ -1054,6 +1055,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                                 }
                             }
                         }
+                        //判断是否是树结构，整个树被包装进了一个对象里面
                         else if (f instanceof TreeBin) {
                             Node<K,V> p;
                             binCount = 2;
@@ -1067,14 +1069,18 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                     }
                 }
                 if (binCount != 0) {
-                    if (binCount >= TREEIFY_THRESHOLD)
+                    //判断数组长度
+                    if (binCount >= TREEIFY_THRESHOLD) {
+                        //转为树结构
                         treeifyBin(tab, i);
+                    }
                     if (oldVal != null)
                         return oldVal;
                     break;
                 }
             }
         }
+        //整个map数量加1，扩容
         addCount(1L, binCount);
         return null;
     }
@@ -2620,11 +2626,14 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
         Node<K,V> b; int n, sc;
         if (tab != null) {
             if ((n = tab.length) < MIN_TREEIFY_CAPACITY)
+                //扩容
                 tryPresize(n << 1);
             else if ((b = tabAt(tab, index)) != null && b.hash >= 0) {
+                //锁数组下标的对象，链表的第一个节点
                 synchronized (b) {
                     if (tabAt(tab, index) == b) {
                         TreeNode<K,V> hd = null, tl = null;
+                        //遍历链表，构造双向链表
                         for (Node<K,V> e = b; e != null; e = e.next) {
                             TreeNode<K,V> p =
                                 new TreeNode<K,V>(e.hash, e.key, e.val,
@@ -2635,6 +2644,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                                 tl.next = p;
                             tl = p;
                         }
+                        //构造树，可见的Volatile设置为数组下标的元素
                         setTabAt(tab, index, new TreeBin<K,V>(hd));
                     }
                 }
@@ -2757,6 +2767,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
             super(TREEBIN, null, null, null);
             this.first = b;
             TreeNode<K,V> r = null;
+            //遍历双向链表，构造树
             for (TreeNode<K,V> x = b, next; x != null; x = next) {
                 next = (TreeNode<K,V>)x.next;
                 x.left = x.right = null;
@@ -2787,6 +2798,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                                 xp.left = x;
                             else
                                 xp.right = x;
+                            //平衡树
                             r = balanceInsertion(r, x);
                             break;
                         }
