@@ -25,7 +25,6 @@ public class LinkedTransferQueueProducer implements Runnable {
     public void run() {
         try {
             while (true) {
-
                 if (queue.hasWaitingConsumer()) {
                     queue.transfer(produce());
                 }
