@@ -1,4 +1,4 @@
-package com.hdp.juc.blokingqueue;
+package com.hdp.juc.blokingqueue.transferqueue;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

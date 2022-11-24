@@ -1,4 +1,4 @@
-package com.hdp.juc.blokingqueue;
+package com.hdp.juc.blokingqueue.transferqueue;
 
 import java.util.concurrent.TransferQueue;
 
