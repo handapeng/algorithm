@@ -645,7 +645,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
         //判断是否初始化
         if ((tab = table) == null || (n = tab.length) == 0)
             n = (tab = resize()).length;
-        //p赋值为数组下标为数组长度与上hash结果（都为1才为1）的第一个数据
+        //p赋值为数组下标为数组长度-1与上hash结果（都为1才为1）的第一个数据（数组长度为2的n次幂 长度-1 二进制最后几位都为1 判断hash值的低几位 与上1，都为1才为1）
         if ((p = tab[i = (n - 1) & hash]) == null)
             //这个位置没有元素，直接赋值
             tab[i] = newNode(hash, key, value, null);
@@ -751,7 +751,10 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                         Node<K,V> next;
                         do {
                             next = e.next;
-                            //维护链表，开始转移链表里的元素根据原本的hash和旧数组长度进行与操作，put元素时是数组长度-1与上hash值
+                            //维护链表，开始转移链表里的元素根据原本的hash和旧数组长度进行与操作，尾插法
+                            // 扩容是乘以二，二进制的高一位是1，与上key的hash值，都为1才为1，与上个版本的hashmap其实是一样的，只不过是都统计出来组成链表，才统一转移到新数组上，
+                            // 上个版本是新数组长度及旧数组长度乘以二及（0000 1111，0001 1111），与上hash值放到新的数组的头部，因为数组长度的低的位数没有变，
+                            // put元素时是数组长度-1与上hash值
                             if ((e.hash & oldCap) == 0) {
                                 //尾节点不为空，设置低位链表
                                 if (loTail == null)
