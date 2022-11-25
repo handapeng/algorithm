@@ -1,6 +1,6 @@
 package com.hdp.juc.jmm;
 
-import com.tuling.jucdemo.lock.CASLock;
+import com.hdp.juc.lock.CASLock;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -21,9 +21,9 @@ public class Test {
                 //synchronized (object) {
                 //lock.lock();
                 //
-                for(;;){
+                for (; ; ) {
                     //state=0
-                    if(casLock.getState()==0&&casLock.cas()) {
+                    if (casLock.getState() == 0 && casLock.cas()) {
                         try {
                             for (int j = 0; j < 10000; j++) {
                                 sum++;
@@ -46,7 +46,8 @@ public class Test {
 
         try {
             Thread.sleep(3000);
-        } catch (InterruptedException e) {
+        } catch (
+                InterruptedException e) {
             e.printStackTrace();
         }
 

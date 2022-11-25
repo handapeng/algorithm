@@ -35,7 +35,7 @@ public class UnsafeFactory {
      */
     public static long getFieldOffset(Unsafe unsafe, Class clazz, String fieldName) {
         try {
-            return unsafe.objectFieldOffset(clazz.getField(fieldName));
+            return unsafe.objectFieldOffset(clazz.getDeclaredField(fieldName));
         } catch (NoSuchFieldException e) {
             throw new Error(e);
         }
