@@ -1012,7 +1012,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
         //计算hash值
         int hash = spread(key.hashCode());
         int binCount = 0;
-        //遍历数组
+        //自旋
         for (Node<K,V>[] tab = table;;) {
             Node<K,V> f; int n, i, fh;
             //判断数组是否初始化
