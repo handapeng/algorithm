@@ -1026,7 +1026,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                              new Node<K,V>(hash, key, value, null)))
                     break;                   // no lock when adding to empty bin
             }
-            //判断是否在扩容
+            //判断当前节点是否在扩容
             else if ((fh = f.hash) == MOVED)
                 //帮助扩容
                 tab = helpTransfer(tab, f);
