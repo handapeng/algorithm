@@ -15,6 +15,7 @@ public class MapTest {
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap<>();
         map.put("1", 2);
         concurrentHashMap.put("2", 2);
+        concurrentHashMap.containsKey("");
         //1.7: ConcurrentHashMap类中包含两个静态内部类 HashEntry 和 Segment。HashEntry 用来封装映射表的键值对；
         //Segment 用来充当锁的角色，每个 Segment 对象守护整个散列映射表的若干个桶。每个桶是由若干个
         //HashEntry 对象链接起来的链表。一个 ConcurrentHashMap 实例中包含由若干个 Segment 对象组成的数组。
