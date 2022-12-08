@@ -1,4 +1,4 @@
-package com.hdp.juc.blokingqueue;
+package com.hdp.juc.blokingqueue.delayqueue;
 
 import java.util.Comparator;
 import java.util.Random;
