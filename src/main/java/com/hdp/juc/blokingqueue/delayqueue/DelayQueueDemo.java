@@ -15,50 +15,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/11/24 14:59
  */
 public class DelayQueueDemo {
-    static class Cache implements Runnable {
-        private boolean stop = false;
-        private Map<String, String> itemMap = new HashMap<>();
-        private DelayQueue<CacheItem> delayQueue = new DelayQueue<>();
-        public Cache() {
-            // 开启内部线程检测是否过期
-            new Thread(this).start();
-        }
-
-        /**
-         * 添加缓存
-         * @param key
-         * @param value
-         * @param exprieTime 过期时间,单位秒
-         */
-        public void put(String key, String value, long exprieTime) {
-            CacheItem cacheItem = new CacheItem(key, exprieTime);
-            // 此处忽略添加重复 key 的处理
-            delayQueue.put(cacheItem);
-            itemMap.put(key, value);
-        }
-
-        public String get(String key) {
-            return itemMap.get(key);
-        }
-
-        public void shutDown() {
-            stop = true;
-        }
-
-        @Override
-        public void run() {
-            while (!stop) {
-                CacheItem cacheItem = delayQueue.poll();
-                if (cacheItem != null) {
-                    // 元素过期, 从缓存中移除
-                    itemMap.remove(cacheItem.getKey());
-                    System.out.println("key"+cacheItem.getKey()+"过期并移除");
-                }
-            }
-            System.out.println("cache stop");
-        }
-    }
-
     static class CacheItem implements Delayed {
         private String key;
         /**
@@ -71,6 +27,7 @@ public class DelayQueueDemo {
         public CacheItem(String key, long exprieTime) {
             this.key = key;
             this.exprieTime = exprieTime;
+            this.currentTime = System.currentTimeMillis();
         }
 
         @Override
@@ -97,6 +54,50 @@ public class DelayQueueDemo {
             return key;
         }
     }
+    static class Cache implements Runnable {
+        private boolean stop = false;
+        private Map<String, String> itemMap = new HashMap<>();
+        private DelayQueue<CacheItem> delayQueue = new DelayQueue<>();
+
+        public Cache() {
+            // 开启内部线程检测是否过期
+            new Thread(this).start();
+        }
+
+        /**
+         * 添加缓存
+         * @param key
+         * @param value
+         * @param exprieTime 过期时间,单位秒
+         */
+        public void put(String key, String value, long exprieTime) {
+            CacheItem cacheItem = new CacheItem(key, exprieTime);
+            // 此处忽略添加重复 key 的处理
+            delayQueue.put(cacheItem);
+            itemMap.put(key, value);
+        }
+
+        public String get(String key) {
+            return itemMap.get(key);
+        }
+
+        public void shutDown() {
+            stop = true;
+        }
+        @Override
+        public void run() {
+            while (!stop) {
+                CacheItem cacheItem = delayQueue.poll();
+                if (cacheItem != null) {
+                    // 元素过期, 从缓存中移除
+                    itemMap.remove(cacheItem.getKey());
+                    System.out.println("key"+cacheItem.getKey()+"过期并移除");
+                }
+            }
+            System.out.println("cache stop");
+        }
+
+    }
     public static void main(String[] args) throws InterruptedException {
         Cache cache = new Cache();
         cache.put("a","1",5);
@@ -107,6 +108,7 @@ public class DelayQueueDemo {
             String b = cache.get("b");
             String c = cache.get("c");
             System.out.println("a:" + a + "b:" + b + "c:" + c);
+            // 元素均过期后退出循环
             if (StringUtils.isEmpty(a) && StringUtils.isEmpty(b) && StringUtils.isEmpty(c)) {
                 break;
             }
