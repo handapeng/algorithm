@@ -34,7 +34,7 @@ public class DelayQueueDemo {
         public long getDelay(TimeUnit unit) {
             // 计算剩余的过期时间
             // 大于 0 说明未过期
-            return exprieTime-TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-currentTime);
+            return exprieTime - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - currentTime);
         }
 
         @Override
@@ -54,6 +54,7 @@ public class DelayQueueDemo {
             return key;
         }
     }
+
     static class Cache implements Runnable {
         private boolean stop = false;
         private Map<String, String> itemMap = new HashMap<>();
@@ -66,6 +67,7 @@ public class DelayQueueDemo {
 
         /**
          * 添加缓存
+         *
          * @param key
          * @param value
          * @param exprieTime 过期时间,单位秒
@@ -84,6 +86,7 @@ public class DelayQueueDemo {
         public void shutDown() {
             stop = true;
         }
+
         @Override
         public void run() {
             while (!stop) {
@@ -91,17 +94,18 @@ public class DelayQueueDemo {
                 if (cacheItem != null) {
                     // 元素过期, 从缓存中移除
                     itemMap.remove(cacheItem.getKey());
-                    System.out.println("key"+cacheItem.getKey()+"过期并移除");
+                    System.out.println("key" + cacheItem.getKey() + "过期并移除");
                 }
             }
             System.out.println("cache stop");
         }
 
     }
+
     public static void main(String[] args) throws InterruptedException {
         Cache cache = new Cache();
-        cache.put("a","1",5);
-        cache.put("b","2",4);
+        cache.put("a", "1", 5);
+        cache.put("b", "2", 4);
         cache.put("c", "3", 3);
         while (true) {
             String a = cache.get("a");
