@@ -118,6 +118,7 @@ public class DelayQueueDemo {
             }
             TimeUnit.MILLISECONDS.sleep(1000);
         }
+        cache.put("c", "3", 3);
         cache.shutDown();
     }
 }

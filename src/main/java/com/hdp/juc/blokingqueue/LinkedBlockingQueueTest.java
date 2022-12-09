@@ -10,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class LinkedBlockingQueueTest {
     private static LinkedBlockingQueue<String> linkedBlockingQueue;
+
     public static void main(String[] args) {
         linkedBlockingQueue = new LinkedBlockingQueue<>(20);
         // 1、add 方法:队列已满，报java.lang.IllegalStateException: Queue full 错误
@@ -59,6 +60,6 @@ public class LinkedBlockingQueueTest {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("队列深度："+linkedBlockingQueue.size());
+        System.out.println("队列深度：" + linkedBlockingQueue.size());
     }
 }
