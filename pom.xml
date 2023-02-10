@@ -37,6 +37,7 @@
         </java.version>
         <java.version>1.8</java.version>
         <mybatisplus.version>3.4.1</mybatisplus.version>
+        <mybatis.version>2.0.6</mybatis.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler-plugin.version>3.6.1</compiler-plugin.version>
         <springboot.version>2.2.5.RELEASE</springboot.version>
@@ -105,6 +106,11 @@
             <groupId>org.openjdk.jol</groupId>
             <artifactId>jol-core</artifactId>
             <version>0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.0</version>
         </dependency>
     </dependencies>
 

@@ -105,8 +105,8 @@ public class DelayQueueDemo {
     public static void main(String[] args) throws InterruptedException {
         Cache cache = new Cache();
         cache.put("a", "1", 5);
-        cache.put("b", "2", 4);
-        cache.put("c", "3", 3);
+        cache.put("a", "2", 5);
+        cache.put("c", "3", 5);
         while (true) {
             String a = cache.get("a");
             String b = cache.get("b");
@@ -118,7 +118,6 @@ public class DelayQueueDemo {
             }
             TimeUnit.MILLISECONDS.sleep(1000);
         }
-        cache.put("c", "3", 3);
         cache.shutDown();
     }
 }

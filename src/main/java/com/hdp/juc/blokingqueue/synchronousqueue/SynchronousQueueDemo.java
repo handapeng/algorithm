@@ -12,7 +12,7 @@ import java.util.concurrent.SynchronousQueue;
 public class SynchronousQueueDemo {
     public static void main(String[] args) {
         //新建一个SynchronousQueue同步队列
-        final BlockingQueue<Integer> queue = new SynchronousQueue<>(false);
+        final BlockingQueue<Integer> queue = new SynchronousQueue<>(true);
         //启动一个生产者线程插入对象
         SynchronousQueueProducer synchronousQueueProducer = new SynchronousQueueProducer(queue);
         new Thread(synchronousQueueProducer).start();

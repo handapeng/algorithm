@@ -20,11 +20,11 @@ public class PriorityBlockingQueueDemo {
         for (int i = 0; i < 5; i++) {
             int j = random.nextInt(100);
             System.out.println(j + "");
-            queue.put(j);
+            queue1.put(j);
         }
         System.out.println("take");
         for (int i = 0; i < 5; i++) {
-            System.out.println(queue.take() + " ");
+            System.out.println(queue1.take() + " ");
         }
     }
 }
